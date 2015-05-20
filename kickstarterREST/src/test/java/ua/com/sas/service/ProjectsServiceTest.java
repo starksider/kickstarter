@@ -56,5 +56,24 @@ public class ProjectsServiceTest {
 		// then
 		assertEquals(service.getAll().size(), list.size());
 	}
+	
+	@Test 
+	public void shouldReturnListOfCategories(){
+		//given
+		List<Category> list = new ArrayList<Category>();
+		Category category1 = new Category();
+		category1.setName("Category1");
+		Category category2 = new Category();
+		category2.setName("Category2");
+		
+		//when
+		list.add(category1);
+		list.add(category2);
+		service.addCategory(category1);
+		service.addCategory(category2);
+		
+		//then
+		assertEquals(service.getAll(), list);
+	}
 
 }
