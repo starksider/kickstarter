@@ -7,7 +7,7 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
-	<import resource="classpath:application-context.xml"/>
+	<import resource="classpath:application-context-local.xml"/>
 	
 	<context:property-placeholder location="classpath:test-database.properties" order="10"/>
 
