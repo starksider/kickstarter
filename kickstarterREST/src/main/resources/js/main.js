@@ -81,9 +81,11 @@ $(document).ready(function() {
 	}
 	
 	var loadProject = function(id){
-		if ($("div").hasClass('info-container')){
+		if ($("div").hasClass("info-container")){
 			$(".info-container").remove();
-			$(".project").show();
+			$("#project" + id).one('transitionend webkitTransitionEnd oTransitionEnd', function () {
+				$(".project").show();
+			});
 		} else {
 			$.get("project/" + id, function(project){
 				$("#project" + id).append('<div class="info-container"><p>Money we have: ' + project.moneyHas + '</p>'
@@ -91,9 +93,9 @@ $(document).ready(function() {
 						+ '</p> <p>Days left: ' + project.daysLeft + '</p></div>');
 				$(".info-container").append('<div class="faq">' +
 						'<form method="POST" action="/">' +
-							'<textarea name="question" placeholder="Add your question"></textarea>' +
-							'<input type="submit">' +
-						'</form></div>');
+						'<textarea name="question" placeholder="Add your question"></textarea>' +
+						'<input type="submit">' +
+				'</form></div>');
 				getFaqs(id);
 				$('form').submit(function(event){
 					event.preventDefault();
@@ -105,8 +107,8 @@ $(document).ready(function() {
 					}
 				});
 			}).done(function(){
-				$("#project" + id).addClass("highlighted");
 				$(".project").not("#project"  + id).hide();
+				$("#project" + id).addClass("highlighted");
 			});
 		} 
 	}

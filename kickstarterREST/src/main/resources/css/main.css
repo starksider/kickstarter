@@ -47,6 +47,11 @@ body {
 	margin:		0 10px 10px;
 	border: 	2px solid #ebebeb;
 	padding: 	15px;
+	min-width: 100px;
+	-webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .hidden {
@@ -59,7 +64,8 @@ body {
 
 .highlighted {
 	margin:		0 5%;
-	width:		85%;
+	min-width:	85%;
+	max-width:  85%;
 	text-align:	left;
 }
 
