@@ -5,6 +5,7 @@
         <title>Kickstarter</title>
         <link rel="stylesheet" type="text/css" href="resources/css/main.css">
         <script src="resources/js/jquery-2.1.3.js"></script>
+        <script src="resources/js/login.js"></script>
         <script src="resources/js/main.js"></script>
     </head>
     <body>
@@ -12,7 +13,18 @@
     		<li>Kick</li>
     		<li>Search</li>
     		<li>Sign up</li>
-    		<li>Log in</li>
+    		<li id="login">
+    			Log in
+    			<div id="login-form">
+    				<form method="post" action="/">
+    					<label for="name">Enter your email:</label>
+    					<input type="text" name="name">
+    					<label for="password">Enter your password:</label>
+    					<input type="password" name="name">
+    					<input type="submit" value="Log in">
+    				</form>
+    			</div>
+    		</li>
     	</ul>
     	<div id="quote"></div>
     	<div id="categories"></div>

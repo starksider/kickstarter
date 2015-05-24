@@ -54,10 +54,6 @@ body {
     transition: all 0.3s ease;
 }
 
-.hidden {
-	display: 	none;	
-}
-
 .main-info {
 	cursor:	pointer;
 }
@@ -85,4 +81,45 @@ input[type="submit"]{
 	line-height:		50px;
 	border:				none;
 	cursor:				pointer;
+}
+
+#login {
+	position:relative;
+}
+
+#login-form {
+	position: absolute;
+	top: 100%;
+	left:0;
+	text-align: left;
+	border: 2px solid #777;
+	padding: 15px;
+	background: #fafafa;
+	display: none;
+}
+
+#login-form input {
+	display: block;
+	margin: 10px 0;
+}
+
+#login-form input[type="submit"]{
+	width:100%;
+	line-height: 30px;
+	margin: 15px 0 0;
+}
+
+.active {
+	background-color: rgba(0,0,0, 0.1);
+}
+
+.wrong-input {
+	box-shadow: 0 0 5px red;
+	border: 2px solid transparent;
+}
+
+.wrong-input-text {
+	color:red;
+	padding: 5px 0; 
+	margin:0;
 }

@@ -1,0 +1,30 @@
+package ua.com.sas.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import ua.com.sas.dao.UsersDAO;
+import ua.com.sas.model.User;
+
+@Service
+@Transactional
+public class UsersServiceImpl implements UsersService {
+	
+	@Autowired
+	private UsersDAO usersDAO;
+
+	@Override
+	public boolean authorize(User user) {
+		List<User> users = usersDAO.getList();
+		for (User userItem : users){
+			if (userItem.getEmail().equalsIgnoreCase(user.getEmail())) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+}

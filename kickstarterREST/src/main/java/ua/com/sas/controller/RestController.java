@@ -54,6 +54,7 @@ public class RestController {
 
 	@RequestMapping(value = "faq/{id}", method = RequestMethod.POST)
 	public void post(@RequestBody final Faq faq, @PathVariable int id) {
+		System.out.println(faq.getQuestion());
 		serviceFaq.addQuestion(faq, id);
 	}
 
