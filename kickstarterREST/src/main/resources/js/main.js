@@ -97,7 +97,7 @@ $(document).ready(function() {
 						'<input type="submit">' +
 				'</form></div>');
 				getFaqs(id);
-				$('form').submit(function(event){
+				$('.info-container').on('submit', 'form', function(event){
 					event.preventDefault();
 					var addedQuestion = $(this).find('textarea').val();
 					$(this).find('textarea').val('');

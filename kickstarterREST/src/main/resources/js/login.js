@@ -16,19 +16,24 @@ $(document).ready(function() {
 		}
 	});
 	
+	//TODO find out about localStorage
+	$("#login-form").find("input[type=\"email\"]").val(localStorage.getItem("localData"));
+
 	$("#login-form").on('submit', 'form', function(event){
 		event.preventDefault();
-		var email = $(this).find('input[type="text"]').val();
+		var email = $(this).find('input[type="email"]').val();
 		var password = $(this).find('input[type="password"]').val();
 		var user = {"email": email, "password": password}
+		
+		//TODO find out about localStorage
+		localStorage.setItem("localData", email);
 		sendAjax(user);
 	});
-	
+
 	var access = function (data) {
 		if (data === true){
-			$("#login-form").append('Ok');
 			$("#login-form").hide().parent().removeClass("active");
-			$("#login-form").find('p').remove();
+			$("#login-form").find('p').remove().end().find('input').removeClass();
 		} else {
 			$("#login-form").find("input")
 				.not('input[type="submit"]').addClass("wrong-input");

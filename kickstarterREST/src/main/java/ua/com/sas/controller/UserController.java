@@ -18,7 +18,6 @@ public class UserController {
 	
 	@RequestMapping(value = "login/", method = RequestMethod.POST)
 	public @ResponseBody boolean post(@RequestBody final User user) {
-		System.out.println(service.authorize(user));
 		return service.authorize(user);
 	}
 	

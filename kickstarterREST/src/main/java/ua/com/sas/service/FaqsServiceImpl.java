@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.com.sas.dao.FaqsDAO;
-import ua.com.sas.dao.ProjectsDAO;
+import ua.com.sas.dao.Faqs;
+import ua.com.sas.dao.Projects;
 import ua.com.sas.model.Faq;
 
 @Service
@@ -15,14 +15,14 @@ import ua.com.sas.model.Faq;
 public class FaqsServiceImpl implements FaqsService {
 	
 	@Autowired
-	FaqsDAO faqsDAO;
+	private Faqs faqs;
 	
 	@Autowired
-	ProjectsDAO progectsDAO;
+	private Projects progects;
 
 	@Override
 	public List<Faq> getFaqs(int id) {
-		List<Faq> result = progectsDAO.get(id).getFaqs();
+		List<Faq> result = progects.get(id).getFaqs();
 		result.size();
 		return result;
 	}
@@ -34,8 +34,8 @@ public class FaqsServiceImpl implements FaqsService {
 
 	@Override
 	public void addQuestion(Faq faq, int projectId) {
-		faq.setProject(progectsDAO.get(projectId));
-		faqsDAO.add(faq);
+		faq.setProject(progects.get(projectId));
+		faqs.add(faq);
 	}
 
 }

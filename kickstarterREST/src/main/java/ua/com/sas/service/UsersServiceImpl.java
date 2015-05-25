@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import ua.com.sas.dao.UsersDAO;
+import ua.com.sas.dao.Users;
 import ua.com.sas.model.User;
 
 @Service
@@ -14,14 +14,16 @@ import ua.com.sas.model.User;
 public class UsersServiceImpl implements UsersService {
 	
 	@Autowired
-	private UsersDAO usersDAO;
+	private Users usersDAO;
 
 	@Override
 	public boolean authorize(User user) {
 		List<User> users = usersDAO.getList();
 		for (User userItem : users){
 			if (userItem.getEmail().equalsIgnoreCase(user.getEmail())) {
-				return true;
+				if (userItem.getPassword().equals(user.getPassword())){
+					return true;
+				}
 			}
 		}
 		return false;

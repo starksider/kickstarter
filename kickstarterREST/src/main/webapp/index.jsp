@@ -18,9 +18,9 @@
     			<div id="login-form">
     				<form method="post" action="/">
     					<label for="name">Enter your email:</label>
-    					<input type="text" name="name">
+    					<input type="email" placeholder="email" name="name">
     					<label for="password">Enter your password:</label>
-    					<input type="password" name="name">
+    					<input type="password" placeholder="password" name="password">
     					<input type="submit" value="Log in">
     				</form>
     			</div>
