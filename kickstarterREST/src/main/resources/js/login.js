@@ -1,7 +1,22 @@
 $(document).ready(function() {
+	var logout = function(){
+		if (localStorage.getItem("authorize")){
+			$("#login").hide();
+			$("#navigation").append('<li id="logout">Logout</li>')
+			$("#logout").click(function(){
+				$(this).remove();
+				$("#login").show();
+				localStorage.removeItem("authorize");
+			});
+		}
+	}
+	
+	logout();
+	var $loginForm = $("#login-form");
+	
 	$("#login").on('click', function(){
 		$(this).toggleClass("active");
-		$("#login-form").toggle();
+		$loginForm.toggle();
 	});
 	
 	$("#login").on('click', 'div', function(event){
@@ -16,29 +31,27 @@ $(document).ready(function() {
 		}
 	});
 	
-	//TODO find out about localStorage
-	$("#login-form").find("input[type=\"email\"]").val(localStorage.getItem("localData"));
+	//TODO find out about localStorage, sessionStorage - if close browser all data clears
 
-	$("#login-form").on('submit', 'form', function(event){
+	$loginForm.on('submit', 'form', function(event){
 		event.preventDefault();
 		var email = $(this).find('input[type="email"]').val();
 		var password = $(this).find('input[type="password"]').val();
 		var user = {"email": email, "password": password}
-		
-		//TODO find out about localStorage
-		localStorage.setItem("localData", email);
 		sendAjax(user);
 	});
 
 	var access = function (data) {
 		if (data === true){
-			$("#login-form").hide().parent().removeClass("active");
-			$("#login-form").find('p').remove().end().find('input').removeClass();
+			$loginForm.hide().parent().removeClass("active");
+			$loginForm.find('p').remove().end().find('input').removeClass();
+			localStorage.setItem("authorize", data);
+			logout();
 		} else {
-			$("#login-form").find("input")
+			$loginForm.find("input")
 				.not('input[type="submit"]').addClass("wrong-input");
-			$("#login-form").find('p').remove();
-			$("#login-form").prepend('<p class="wrong-input-text">Wrong email or password</p>');
+			$loginForm.find('p').remove();
+			$loginForm.prepend('<p class="wrong-input-text">Wrong email or password</p>');
 			
 		}
 	}

@@ -21,7 +21,7 @@
     					<input type="email" placeholder="email" name="name">
     					<label for="password">Enter your password:</label>
     					<input type="password" placeholder="password" name="password">
-    					<input type="submit" value="Log in">
+    					<input type="submit" value="Login">
     				</form>
     			</div>
     		</li>

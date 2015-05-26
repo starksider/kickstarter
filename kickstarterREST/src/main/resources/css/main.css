@@ -20,6 +20,10 @@ body {
 	
 }
 
+#navigation li:hover {
+	background: rgba(0,0,0,0.1);
+}
+
 #categories {
 	margin:		30px 0;
 }
