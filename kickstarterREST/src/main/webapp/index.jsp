@@ -12,7 +12,17 @@
     	<ul id="navigation">
     		<li>Kick</li>
     		<li>Search</li>
-    		<li>Sign up</li>
+    		<li id="signin">Sign up
+    		    <div id="signin-form">
+    				<form method="post" action="/">
+    					<label for="name">Enter your email:</label>
+    					<input type="email" placeholder="email" name="name">
+    					<label for="password">Enter your password:</label>
+    					<input type="password" placeholder="password" name="password">
+    					<input type="submit" value="Login">
+    				</form>
+    			</div>
+    		</li>
     		<li id="login">
     			Log in
     			<div id="login-form">

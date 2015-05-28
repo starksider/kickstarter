@@ -87,11 +87,11 @@ input[type="submit"]{
 	cursor:				pointer;
 }
 
-#login {
+#login, #signin {
 	position:relative;
 }
 
-#login-form {
+#login-form, #signin-form {
 	position: absolute;
 	top: 100%;
 	left:0;

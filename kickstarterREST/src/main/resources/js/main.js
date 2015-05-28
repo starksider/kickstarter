@@ -99,11 +99,17 @@ $(document).ready(function() {
 				getFaqs(id);
 				$('.info-container').on('submit', 'form', function(event){
 					event.preventDefault();
-					var addedQuestion = $(this).find('textarea').val();
-					$(this).find('textarea').val('');
-					if (addedQuestion !== ''){
-						sendAjax(addedQuestion, id);
-						$(this).parent('.faq').append('<p>' + addedQuestion + '</p>');
+					if (localStorage.getItem("authorize")){
+						var addedQuestion = $(this).find('textarea').val();
+						$(this).find('textarea').val('');
+						if (addedQuestion !== ''){
+							sendAjax(addedQuestion, id);
+							$(this).parent('.faq').append('<p>' + addedQuestion + '</p>');
+						}
+					} else {
+						if (!$(this).has('p').length) {
+							$(this).append("<p class=\"wrong-input-text\">You need to authorize!</p>");
+						}
 					}
 				});
 			}).done(function(){
