@@ -102,12 +102,12 @@ input[type="submit"]{
 	display: none;
 }
 
-#login-form input {
+#login-form input, #signin-form input {
 	display: block;
 	margin: 10px 0;
 }
 
-#login-form input[type="submit"]{
+#login-form input[type="submit"], #signin-form input[type="submit"]{
 	width:100%;
 	line-height: 30px;
 	margin: 15px 0 0;

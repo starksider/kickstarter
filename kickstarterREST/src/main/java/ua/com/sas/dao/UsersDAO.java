@@ -16,4 +16,10 @@ public class UsersDAO extends AbstractDAO implements Users{
 	    return session.createCriteria(User.class).list();
 	}
 
+	@Override
+	public void add(User user) {
+		Session session = getSession();
+		session.save(user);
+	}
+
 }

@@ -21,4 +21,9 @@ public class UserController {
 		return service.authorize(user);
 	}
 	
+	@RequestMapping(value="add/", method = RequestMethod.POST)
+	public @ResponseBody User add(@RequestBody final User user){
+		service.add(user);
+		return user;
+	}
 }

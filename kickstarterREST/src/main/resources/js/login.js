@@ -13,6 +13,7 @@ $(document).ready(function() {
 	
 	logout();
 	var $loginForm = $("#login-form");
+	var $signinForm = $("#signin-form");
 	
 	$("#login, #signin").on('click', function(){
 		$(this).toggleClass("active");
@@ -24,7 +25,7 @@ $(document).ready(function() {
 			$loginForm.toggle();
 		} else {
 			hidePrevious("#login-form");
-			$("#signin-form").toggle();
+			$signinForm.toggle();
 		}
 		
 	});
@@ -48,7 +49,16 @@ $(document).ready(function() {
 		var email = $(this).find('input[type="email"]').val();
 		var password = $(this).find('input[type="password"]').val();
 		var user = {"email": email, "password": password}
-		sendAjax(user);
+		sendAjax(user, "login/");
+	});
+	
+	$signinForm.on('submit', 'form', function(event){
+		event.preventDefault();
+		var email = $(this).find('input[type="email"]').val();
+//		var firstName = $(this).find('input[type="email"]').val();
+//		var password = $(this).find('input[type="password"]').val();
+		var user = {"email": email}
+		sendAjax(user, "add/");
 	});
 
 	var access = function (data) {
@@ -57,18 +67,19 @@ $(document).ready(function() {
 			$loginForm.find('p').remove().end().find('input').removeClass();
 			localStorage.setItem("authorize", data);
 			logout();
-		} else {
+		} else if (data === false) {
 			$loginForm.find("input")
 				.not('input[type="submit"]').addClass("wrong-input");
 			$loginForm.find('p').remove();
 			$loginForm.prepend('<p class="wrong-input-text">Wrong email or password</p>');
-			
+		} else {
+			alert("Sssa");
 		}
 	}
 	
-	function sendAjax(user) {
+	function sendAjax(user, url) {
 		$.ajax({ 
-		    url: "login/", 
+		    url: url, 
 		    type: 'POST', 
 		    dataType: 'json', 
 		    data: JSON.stringify(user), 

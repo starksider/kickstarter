@@ -6,4 +6,6 @@ public interface UsersService {
 	
 	boolean authorize(User user);
 	
+	void add(User user);
+	
 }

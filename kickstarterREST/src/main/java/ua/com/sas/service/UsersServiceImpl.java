@@ -28,5 +28,10 @@ public class UsersServiceImpl implements UsersService {
 		}
 		return false;
 	}
+
+	@Override
+	public void add(User user) {
+		usersDAO.add(user);
+	}
 	
 }

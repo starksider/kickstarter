@@ -5,5 +5,7 @@ import java.util.List;
 import ua.com.sas.model.User;
 
 public interface Users {
-	public List<User> getList();
+	List<User> getList();
+	
+	void add(User user);
 }
