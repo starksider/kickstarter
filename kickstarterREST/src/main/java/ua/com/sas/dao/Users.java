@@ -8,4 +8,6 @@ public interface Users {
 	List<User> getList();
 	
 	void add(User user);
+	
+	List<String> getEmails();
 }

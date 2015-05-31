@@ -51,14 +51,38 @@ $(document).ready(function() {
 		var user = {"email": email, "password": password}
 		sendAjax(user, "login/");
 	});
+	$signinForm.on('blur', 'input[type="email"]', function(){
+		var inEmail = $(this).val();
+		$.get("email/", function(emails){
+			for (var index in emails){
+				var email = emails[index];
+				if (inEmail === email){
+					alert("I'm working");
+					//TODO do email checking
+				}
+			}
+		});
+	});
 	
 	$signinForm.on('submit', 'form', function(event){
 		event.preventDefault();
 		var email = $(this).find('input[type="email"]').val();
-//		var firstName = $(this).find('input[type="email"]').val();
-//		var password = $(this).find('input[type="password"]').val();
-		var user = {"email": email}
-		sendAjax(user, "add/");
+		var firstName = $("#firstName").val();
+		var lastName = $("#lastName").val();
+		var password = $(this).find('input[type="password"]')
+		.filter(":first").val();
+		var confirmPassword = $(this).find('input[type="password"]')
+		.filter(":eq(1)").val();
+		
+		if (password === confirmPassword){
+			var user = {"email": email, "firstName": firstName,
+					"lastName": lastName, "password": password}
+			sendAjax(user, "add/");
+		} else {
+			if (!$(this).has('p').length) {
+				$(this).append("<p class=\"wrong-input-text\">Wrong repeated password</p>");
+			}
+		}
 	});
 
 	var access = function (data) {
@@ -73,12 +97,12 @@ $(document).ready(function() {
 			$loginForm.find('p').remove();
 			$loginForm.prepend('<p class="wrong-input-text">Wrong email or password</p>');
 		} else {
-			alert("Sssa");
+			alert(data.email);
 		}
 	}
 	
 	function sendAjax(user, url) {
-		$.ajax({ 
+		$.ajax({
 		    url: url, 
 		    type: 'POST', 
 		    dataType: 'json', 

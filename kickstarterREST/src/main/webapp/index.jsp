@@ -16,15 +16,15 @@
     		    <div id="signin-form">
     				<form method="post" action="/">
     					<label for="name">Enter your email:</label>
-    					<input type="email" placeholder="Email" name="email">
+    					<input type="email" placeholder="Email" name="email" required>
     					<label for="firstName">Enter your first name:</label>
-    					<input type="text" placeholder="First name" name="firstName" >
+    					<input type="text" placeholder="First name" name="firstName" id="firstName" required>
     					<label for="lastName">Enter your last name:</label>
-    					<input type="text" placeholder="Last name" name="lastName">
+    					<input type="text" placeholder="Last name" name="lastName" id="lastName" required>
     					<label for="password">Enter your password:</label>
-    					<input type="password" placeholder="Password" name="password">
+    					<input type="password" placeholder="Password" name="password" required>
     					<label for="confirmPassword">Confirm your password:</label>
-    					<input type="password" placeholder="Repeat password" name="confirmPassword">
+    					<input type="password" placeholder="Repeat password" name="confirmPassword" required>
     					<input type="submit" value="Sign in">
     				</form>
     			</div>

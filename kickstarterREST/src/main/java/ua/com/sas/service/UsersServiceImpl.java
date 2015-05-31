@@ -33,5 +33,10 @@ public class UsersServiceImpl implements UsersService {
 	public void add(User user) {
 		usersDAO.add(user);
 	}
+
+	@Override
+	public List<String> getEmails() {
+		return usersDAO.getEmails();
+	}
 	
 }
