@@ -51,14 +51,31 @@ $(document).ready(function() {
 		var user = {"email": email, "password": password}
 		sendAjax(user, "login/");
 	});
+	
+	var emailExist = false;
+	
+	var setEmaliExist = function(state){
+		emailExist = state;
+	}
+	
+	var isEmailExist = function(){
+		return emailExist;
+	}
+	
 	$signinForm.on('blur', 'input[type="email"]', function(){
 		var inEmail = $(this).val();
 		$.get("email/", function(emails){
 			for (var index in emails){
 				var email = emails[index];
 				if (inEmail === email){
-					alert("I'm working");
-					//TODO do email checking
+					if (!$signinForm.has('p').length) {
+						$signinForm.prepend('<p class="wrong-input-text">Email ' + 
+								email + ' exist, please try another');
+						setEmaliExist(true);
+					}
+				} else {
+					$signinForm.find("p").remove();
+					setEmaliExist(false);
 				}
 			}
 		});
@@ -74,12 +91,12 @@ $(document).ready(function() {
 		var confirmPassword = $(this).find('input[type="password"]')
 		.filter(":eq(1)").val();
 		
-		if (password === confirmPassword){
+		if (password === confirmPassword && !isEmailExist()){
 			var user = {"email": email, "firstName": firstName,
 					"lastName": lastName, "password": password}
 			sendAjax(user, "add/");
 		} else {
-			if (!$(this).has('p').length) {
+			if (!$(this).has('p').length && !isEmailExist()) {
 				$(this).append("<p class=\"wrong-input-text\">Wrong repeated password</p>");
 			}
 		}
