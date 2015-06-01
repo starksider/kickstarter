@@ -9,6 +9,12 @@
         <script src="resources/js/main.js"></script>
     </head>
     <body>
+    	<div id="popup">
+    		<div>
+    			<p></p>
+    			<button class="button">Close</button>
+    		</div>
+    	</div>
     	<ul id="navigation">
     		<li>Kick</li>
     		<li>Search</li>

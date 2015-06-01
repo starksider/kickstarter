@@ -2,10 +2,12 @@ $(document).ready(function() {
 	var logout = function(){
 		if (localStorage.getItem("authorize")){
 			$("#login").hide();
+			$("#signin").hide();
 			$("#navigation").append('<li id="logout">Logout</li>')
 			$("#logout").click(function(){
 				$(this).remove();
 				$("#login").show();
+				$("#signin").show();
 				localStorage.removeItem("authorize");
 			});
 		}
@@ -39,8 +41,7 @@ $(document).ready(function() {
 		
 		if (!li.is(event.target)
 				&& li.has(event.target).length === 0) {
-			li.find("#login-form").hide().end().removeClass("active");
-			li.find("#signin-form").hide().end().removeClass("active");
+			li.find("#login-form, #signin-form").hide().end().removeClass("active");
 		}
 	});
 	
@@ -64,21 +65,24 @@ $(document).ready(function() {
 	
 	$signinForm.on('blur', 'input[type="email"]', function(){
 		var inEmail = $(this).val();
-		$.get("email/", function(emails){
-			for (var index in emails){
-				var email = emails[index];
-				if (inEmail === email){
-					if (!$signinForm.has('p').length) {
-						$signinForm.prepend('<p class="wrong-input-text">Email ' + 
-								email + ' exist, please try another');
-						setEmaliExist(true);
+		if (inEmail != ''){
+			$.get("email/", function(emails){
+				for (var index in emails){
+					var email = emails[index];
+					if (inEmail.toUpperCase() === email.toUpperCase()){
+						if (!$signinForm.has('p').length) {
+							$signinForm.prepend('<p class="wrong-input-text">Email ' + 
+									email + ' exist, please try another');
+							setEmaliExist(true);
+						}
+						break;
+					} else {
+						$signinForm.find("p").remove();
+						setEmaliExist(false);
 					}
-				} else {
-					$signinForm.find("p").remove();
-					setEmaliExist(false);
 				}
-			}
-		});
+			});
+		}
 	});
 	
 	$signinForm.on('submit', 'form', function(event){
@@ -114,7 +118,10 @@ $(document).ready(function() {
 			$loginForm.find('p').remove();
 			$loginForm.prepend('<p class="wrong-input-text">Wrong email or password</p>');
 		} else {
-			alert(data.email);
+			$signinForm.hide().parent().removeClass("active");
+			localStorage.setItem("authorize", true);
+			logout();
+			$("#popup").show().find("div").find("p").text("Thank you " + data.firstName + ", for registration!");
 		}
 	}
 	
@@ -129,4 +136,8 @@ $(document).ready(function() {
 	        success: access
 		});
 	}
+	
+	$("#popup").on('click', 'button', function(){
+		$("#popup").hide();
+	});
 });

@@ -31,7 +31,7 @@ body {
 #categories a:first-child {
 	margin-left:0;	
 }
-#categories a, input[type="submit"] {
+#categories a, input[type="submit"], .button {
 	text-decoration: none;
 	display:	inline-block;
 	background: #00D8FF;
@@ -40,6 +40,12 @@ body {
 	color: 		white;
 	border-radius:5px;
 	margin-left:20px;
+}
+
+.button {
+	margin-left:0;
+	border:none;
+	cursor:pointer;
 }
 
 #categories a:hover,  input[type="submit"]:hover {
@@ -126,4 +132,26 @@ input[type="submit"]{
 	color:red;
 	padding: 5px 0; 
 	margin:0;
+}
+
+#popup {
+	display: none;
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	background: rgba(0,0,0,0.4);
+}
+
+#popup div {
+	font-size: 16px;
+	position: absolute;
+	background: #fff;
+	display: inline-block;
+	border: 2px solid #05f29b;
+	border-radius: 8px;
+	top:10%;
+	left:50%;
+	-webkit-transform:translateX(-50%);
+	transform:translateX(-50%);
+	padding: 30px;
 }
