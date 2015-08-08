@@ -1,9 +1,9 @@
 $(document).ready(function() {
-	var logout = function(){
+	function logout(){
 		if (localStorage.getItem("authorize")){
 			$("#login").hide();
 			$("#signin").hide();
-			$("#navigation").append('<li id="logout">Logout</li>')
+			$("#navigation").append('<li id="logout">Logout</li>');
 			$("#logout").click(function(){
 				$(this).remove();
 				$("#login").show();
@@ -13,15 +13,14 @@ $(document).ready(function() {
 		}
 	}
 	
-	logout();
 	var $loginForm = $("#login-form");
 	var $signinForm = $("#signin-form");
 	
 	$("#login, #signin").on('click', function(){
 		$(this).toggleClass("active");
-		var hidePrevious = function(selector){
+		function hidePrevious(selector){
 			$(selector).hide().parent().removeClass("active");
-		}
+		};
 		if($(this).is('#login')){
 			hidePrevious("#signin-form");
 			$loginForm.toggle();
@@ -49,7 +48,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		var email = $(this).find('input[type="email"]').val();
 		var password = $(this).find('input[type="password"]').val();
-		var user = {"email": email, "password": password}
+		var user = {"email": email, "password": password};
 		sendAjax(user, "login/");
 	});
 	
@@ -57,11 +56,11 @@ $(document).ready(function() {
 	
 	var setEmaliExist = function(state){
 		emailExist = state;
-	}
+	};
 	
 	var isEmailExist = function(){
 		return emailExist;
-	}
+	};
 	
 	$signinForm.on('blur', 'input[type="email"]', function(){
 		var inEmail = $(this).val();
@@ -97,7 +96,7 @@ $(document).ready(function() {
 		
 		if (password === confirmPassword && !isEmailExist()){
 			var user = {"email": email, "firstName": firstName,
-					"lastName": lastName, "password": password}
+					"lastName": lastName, "password": password};
 			sendAjax(user, "add/");
 		} else {
 			if (!$(this).has('p').length && !isEmailExist()) {
@@ -107,21 +106,28 @@ $(document).ready(function() {
 	});
 
 	var access = function (data) {
-		if (data === true){
-			$loginForm.hide().parent().removeClass("active");
-			$loginForm.find('p').remove().end().find('input').removeClass();
-			localStorage.setItem("authorize", data);
-			logout();
-		} else if (data === false) {
-			$loginForm.find("input")
-				.not('input[type="submit"]').addClass("wrong-input");
-			$loginForm.find('p').remove();
-			$loginForm.prepend('<p class="wrong-input-text">Wrong email or password</p>');
+		
+		if ($.type(data) === "boolean") {
+			checkLogin(data);
 		} else {
 			$signinForm.hide().parent().removeClass("active");
 			localStorage.setItem("authorize", true);
 			logout();
 			$("#popup").show().find("div").find("p").text("Thank you " + data.firstName + ", for registration!");
+		}
+	};
+	
+	function checkLogin(data){
+		if (data){
+			$loginForm.hide().parent().removeClass("active");
+			$loginForm.find('p').remove().end().find('input').removeClass();
+			localStorage.setItem("authorize", data);
+			logout();
+		} else {
+			$loginForm.find("input")
+				.not('input[type="submit"]').addClass("wrong-input");
+			$loginForm.find('p').remove();
+			$loginForm.prepend('<p class="wrong-input-text">Wrong email or password</p>');
 		}
 	}
 	

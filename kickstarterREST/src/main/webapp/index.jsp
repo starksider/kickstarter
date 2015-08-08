@@ -3,6 +3,9 @@
 <html>
     <head>
         <title>Kickstarter</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+        <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,400italic,700italic&subset=latin,cyrillic'
+         rel='stylesheet' type='text/css'>
         <link rel="stylesheet" type="text/css" href="resources/css/main.css">
         <script src="resources/js/jquery-2.1.3.js"></script>
         <script src="resources/js/login.js"></script>
@@ -17,7 +20,7 @@
     	</div>
     	<ul id="navigation">
     		<li>Kick</li>
-    		<li>Search</li>
+    		<li><input type="text" id="search" placeholder="search"></li>
     		<li id="signin">Sign up
     		    <div id="signin-form">
     				<form method="post" action="/">

@@ -14,11 +14,11 @@ $(document).ready(function() {
 	var setHash = function(hash){
 		scipLoad = true;
 		window.location.hash = hash;
-	}
+	};
 	
 	var getHash = function(){
 		return window.location.hash;
-	}
+	};
 	
 	var loadHash = function(hash){
 		var regexp = /^#categories\/([0-9]+)$/;
@@ -36,7 +36,7 @@ $(document).ready(function() {
 			loadProjectsOfCategory(result[1]);
 			loadProject(id);
 		}
-	}
+	};
 	
 	var categoriesListener = function(category) {
 		var id = category.id;
@@ -48,7 +48,7 @@ $(document).ready(function() {
 			setHash('#categories/' + id);
 			loadProjectsOfCategory(id);
 		});
-	}
+	};
 	
 	var loadProjectsOfCategory = function(id){
 		$.get("categories/" + id, function(projects){
@@ -58,7 +58,7 @@ $(document).ready(function() {
 				projectListener(project, id);
 			}
 		});
-	}
+	};
 	var projectListener = function(project, categoryId) {
 		
 		var id = project.id;
@@ -78,7 +78,7 @@ $(document).ready(function() {
 				setHash('#categories/' + categoryId + '/project/' + id);
 			} 
 		});
-	}
+	};
 	
 	var loadProject = function(id){
 		if ($("div").hasClass("info-container")){
@@ -117,7 +117,7 @@ $(document).ready(function() {
 				$("#project" + id).addClass("highlighted");
 			});
 		} 
-	}
+	};
 	
 	var getFaqs = function(id){
 		$.get("faq/" + id, function(faqs){
@@ -126,7 +126,7 @@ $(document).ready(function() {
 				$("#project" + id).find(".faq").append('<p>' + faq.question + '</p>');
 			}
 		});
-	}
+	};
 	
 	function sendAjax(content, projectId) {
 		$.ajax({ 
@@ -146,6 +146,6 @@ $(document).ready(function() {
 			loadHash(getHash());
 		}
 		scipLoad = false;
-	}
+	};
 	
 });
