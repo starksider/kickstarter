@@ -59,3 +59,11 @@ ALTER TABLE ONLY projects
 ALTER TABLE ONLY projects
     ADD CONSTRAINT projects_category_id_fkey FOREIGN KEY (category_id) REFERENCES categories(id);
 
+ALTER TABLE projects ADD COLUMN image text;
+
+UPDATE projects SET image='Music.jpg' WHERE name='Band';
+UPDATE projects SET image='swimming.jpg' WHERE name='Swiming team';
+UPDATE projects SET image='baseball.jpg' WHERE name='Baseball team';
+UPDATE projects SET image='strong.jpg' WHERE name='Strong man competitions';
+UPDATE projects SET image='space.jpg' WHERE name='Space Warning';
+UPDATE projects SET image='hitting.jpg' WHERE name='World hitting';

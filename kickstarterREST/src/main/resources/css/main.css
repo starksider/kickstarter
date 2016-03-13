@@ -1,43 +1,136 @@
-body {
-	padding:	0;
-	margin:		0;
-	text-align: center;
-	background: #fff;
-	font-family: 'Roboto', sans-serif;
-	color:#fff;
-	background: url('images/background.jpg');
-	background-size:cover;
+
+html, body, div, span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,a,address,code,del,em,img,q,small,
+strong,sub,sup,tt,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,
+tr,th,td,article,aside,canvas,details,figure,figcaption,footer,header,hgroup,menu,nav,section,summary,time,
+mark {
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+article,aside,details,figcaption,figure,footer,header,
+hgroup,menu,nav,section {
+  display: block;
+}
+ol, ul {
+  list-style: none;
+}
+blockquote, q {
+  quotes: none;
+}
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+  content: '';
+  content: none;
+}
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+img {
+  border-style: none;
+  font-size: 0px;
+  white-space: nowrap;
+  vertical-align: middle;
+  max-width: 100%;
 }
 
-* {
-	box-sizing: border-box;
+button::-moz-focus-inner {
+  border: 0;
 }
 
-#navigation {
-	list-style-type: none;
-	margin: 		 0;
-	padding:		 0;
-	background: 	 #3C4447;
+input,
+textarea,
+select {
+  outline: none;
+  color: #333;
+  vertical-align: middle;
+}
+form,
+fieldset {
+  margin: 0;
+  padding: 0;
+  border-style: none;
+}
+a {
+  outline: none;
+  text-decoration: none;
+}
+a:active {
+  outline: none;
+}
+h1,h2,h3,h4,h5 {
+  font-weight: normal;
+  line-height: 1.5;
 }
 
-#navigation li {
-	display: inline-block;
-	cursor: pointer;
-	padding: 0 20px;
-	line-height: 4;
+h1 {
+  font-size: 190%;
+  line-height: 1.2;
 }
 
-#navigation li:first-child {
-	float: left;
+h2 {
+  font-size: 166.6666667%;
+  text-align: center;
+  line-height: 2.5;
 }
 
-#navigation li:nth-child(2) {
-	width:50%;
+h3 {
+  font-size: 133.33333%;
+  line-height: 1.2;
 }
+
+address,
+time {
+  font-style: normal;
+}
+button, span,input,a,
+button:active,
+span:active,
+a:active,
+button:focus,
+a:focus,
+input:focus,
+textarea:focus {
+  outline: none;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body { text-align: center; background: #fff; font-family: 'Roboto', sans-serif;	color:#fff; 
+	background: url('images/background.jpg') no-repeat;	background-size:cover; }
+
+.navigation { list-style-type: none; background: #3C4447; }
+
+.navigation li { display: inline-block; cursor: pointer; padding: 0 20px; line-height: 4; }
+
+.navigation li:first-child { float: left; }
+
+.navigation li:nth-child(2) { width:50%; }
+
+.navigation li:hover,
+.navigation li.active { background: rgba(255,255,255,0.1); }
+
+.navigation li.active .login-item { display: block; }
+
+#login, #signin, #logout { position:relative; float: right; }
+
+#login *, #signin * { line-height: 1.5; }
+
+.login-item { background: #4F5659; position: absolute; top: 100%; right:0; text-align: left; padding: 15px; display: none;
+	border-radius: 0 0 5px 5px; width: 300px; }
+
+.login-item input { display: block; width:100%;	margin: 10px 0;	border-radius:5px; border:none; padding: 0.5em 1em; }
+
+.login-item input:focus { outline: none; }
+
+.login-item input[type="submit"] { margin: 15px 0 0; width:auto; display:inline-block; }
 
 #search {
 	border-radius:1em;
-	line-height:2.6;
+	line-height:2.4;
 	padding: 0 3em;
 	border: none;
 	width:100%;
@@ -48,52 +141,6 @@ body {
 #search:focus {
 	box-shadow: 0 0 3px #f1f1f1;
 	outline:none;
-}
-
-#navigation li:hover {
-	background: rgba(255,255,255,0.1);
-}
-
-#login, #signin {
-	position:relative;
-	float: right;
-}
-#login *, #signin * {
-	line-height: 1.5;
-}
-
-#login-form, #signin-form {
-	background: #4F5659;
-	position: absolute;
-	top: 100%;
-	right:0;
-	text-align: left;
-	padding: 15px;
-	display: none;
-	border-radius: 0 0 5px 5px;
-	width: 300px;
-}
-
-#login-form input, #signin-form input {
-	display: block;
-	width:100%;
-	margin: 10px 0;
-	border-radius:5px;
-	border:none;
-	padding: 0.5em 1em;
-}
-#login-form input:focus, #signin-form input:focus {
-	outline: none;
-}
-
-#login-form input[type="submit"], #signin-form input[type="submit"]{
-	margin: 15px 0 0;
-	width:auto;
-	display:inline-block;
-}
-
-.active {
-	background-color: rgba(255,255,255, 0.1);
 }
 
 .wrong-input {
@@ -113,12 +160,13 @@ body {
 #categories a, input[type="submit"], .button {
 	text-decoration: none;
 	display:	inline-block;
-	background: #00D8FF;
-	font:		normal 15px/35px 'Verdana', sans-serif;
+	background: #5176A6;
 	padding:	0 20px;
-	color: 		white;
 	border-radius:5px;
+	color:white;
 	margin-left:20px;
+	font-size: 1.1em;
+	line-height:2.2;
 }
 
 .button {
@@ -128,34 +176,55 @@ body {
 }
 
 #categories {
-	margin:		30px 0;
+	margin:	1em 0 2.5em;
 }
 
 #categories a:hover,  input[type="submit"]:hover {
-	background: #0AA9CF;
+	background: #395273;
 }
 
 .project {
+	vertical-align:top;
 	display:	inline-block;
-	margin:		0 10px 10px;
-	border: 	2px solid #ebebeb;
-	padding: 	15px;
+	margin:		0 10px 20px;
 	border-radius: 5px;
 	min-width: 100px;
+	background: rgba(0,0,0,0.4);
+	min-width:260px;
+	max-width:400px;
+	padding: 0.5em;
 	-webkit-transition: all 0.3s ease;
     -moz-transition: all 0.3s ease;
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
+    line-height: 1.5;
 }
 
 .main-info {
 	cursor:	pointer;
 }
 
+.project-image {
+	height:10em;	
+	background-size: cover;
+	background-position: center;
+	margin-bottom:0.5em;
+}
+
+.main-info h3 {
+	height: 1.5em;
+}
+.main-info p {
+	height: 1.5em;
+	white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+}
+
 .highlighted {
-	margin:		0 5%;
+	margin:		auto 5%;
 	min-width:	85%;
-	max-width:  85%;
+	max-width:	85%;
 	text-align:	left;
 }
 
@@ -164,11 +233,15 @@ body {
 }
 
 textarea {
-	border:		2px solid #777;
+	border:		none;
 	resize:		none;
 	width:		30%;
 	vertical-align:middle;
 	box-sizing:	border-box;
+	border-radius: 5px;
+	font-family: inherit;
+	color: inherit;
+	background-color: rgba(255,255,255,0.2);
 }
 
 input[type="submit"]{
@@ -186,7 +259,7 @@ input[type="submit"]{
 }
 
 #popup div {
-	font-size: 16px;
+	font-size: 1.2em;
 	position: absolute;
 	background: #fff;
 	display: inline-block;
@@ -197,4 +270,26 @@ input[type="submit"]{
 	-webkit-transform:translateX(-50%);
 	transform:translateX(-50%);
 	padding: 30px;
+}
+#quote {
+	display: inline-block;
+	padding: 7em 5% 1em;
+	text-align:right;
+}
+#quote > p:first-child {
+	font-size: 2em;
+	line-heihgt:1;
+}
+#author {
+	display: inline-block;
+}
+#author:before {
+  content: '©';
+  padding-right: 5px;
+  line-height: 1;
+  font-size: 0.8em;
+}
+
+.video {
+	float: right;
 }

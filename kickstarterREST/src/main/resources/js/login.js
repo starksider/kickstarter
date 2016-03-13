@@ -1,66 +1,42 @@
-$(document).ready(function() {
-	function logout(){
-		if (localStorage.getItem("authorize")){
+function Login(){
+	this.isLogged = false;
+};
+
+Login.prototype = {
+	logout: function(storageAuth){
+		if (localStorage.getItem(storageAuth) == 'true'){
 			$("#login").hide();
 			$("#signin").hide();
-			$("#navigation").append('<li id="logout">Logout</li>');
+			$("#logout").show();
 			$("#logout").click(function(){
-				$(this).remove();
+				$(this).hide();
 				$("#login").show();
 				$("#signin").show();
-				localStorage.removeItem("authorize");
-			});
+				localStorage.removeItem(storageAuth);
+			});			
 		}
+		this.isLogged = false;
 	}
+};
+
+$(document).ready(function() {
+	
+	var login = new Login();
+	
+	$("#login, #signin").click(function(e){
+		if($(this).is(e.target)){
+			$(this).toggleClass("active");
+		}
+		clickOutside(this);
+	});
 	
 	var $loginForm = $("#login-form");
 	var $signinForm = $("#signin-form");
 	
-	$("#login, #signin").on('click', function(){
-		$(this).toggleClass("active");
-		function hidePrevious(selector){
-			$(selector).hide().parent().removeClass("active");
-		};
-		if($(this).is('#login')){
-			hidePrevious("#signin-form");
-			$loginForm.toggle();
-		} else {
-			hidePrevious("#login-form");
-			$signinForm.toggle();
-		}
-		
-	});
-	
-	$("#login, #signin").on('click', 'div', function(event){
-		event.stopPropagation();
-	});
-	
-	$(document).mouseup(function (event){
-		var li = $("#login, #signin");
-		
-		if (!li.is(event.target)
-				&& li.has(event.target).length === 0) {
-			li.find("#login-form, #signin-form").hide().end().removeClass("active");
-		}
-	});
-	
 	$loginForm.on('submit', 'form', function(event){
 		event.preventDefault();
-		var email = $(this).find('input[type="email"]').val();
-		var password = $(this).find('input[type="password"]').val();
-		var user = {"email": email, "password": password};
-		sendAjax(user, "login/");
+		sendAjax(this, "login/");
 	});
-	
-	var emailExist = false;
-	
-	var setEmaliExist = function(state){
-		emailExist = state;
-	};
-	
-	var isEmailExist = function(){
-		return emailExist;
-	};
 	
 	$signinForm.on('blur', 'input[type="email"]', function(){
 		var inEmail = $(this).val();
@@ -72,12 +48,10 @@ $(document).ready(function() {
 						if (!$signinForm.has('p').length) {
 							$signinForm.prepend('<p class="wrong-input-text">Email ' + 
 									email + ' exist, please try another');
-							setEmaliExist(true);
 						}
 						break;
 					} else {
 						$signinForm.find("p").remove();
-						setEmaliExist(false);
 					}
 				}
 			});
@@ -86,20 +60,13 @@ $(document).ready(function() {
 	
 	$signinForm.on('submit', 'form', function(event){
 		event.preventDefault();
-		var email = $(this).find('input[type="email"]').val();
-		var firstName = $("#firstName").val();
-		var lastName = $("#lastName").val();
-		var password = $(this).find('input[type="password"]')
-		.filter(":first").val();
-		var confirmPassword = $(this).find('input[type="password"]')
-		.filter(":eq(1)").val();
+		var password = $(this).find('#password').val();
+		var confirmPassword = $(this).find('#confirm_password').val();
 		
-		if (password === confirmPassword && !isEmailExist()){
-			var user = {"email": email, "firstName": firstName,
-					"lastName": lastName, "password": password};
-			sendAjax(user, "add/");
+		if (password === confirmPassword){
+			sendAjax(this, "add/");
 		} else {
-			if (!$(this).has('p').length && !isEmailExist()) {
+			if (!$(this).has('p').length) {
 				$(this).append("<p class=\"wrong-input-text\">Wrong repeated password</p>");
 			}
 		}
@@ -112,7 +79,7 @@ $(document).ready(function() {
 		} else {
 			$signinForm.hide().parent().removeClass("active");
 			localStorage.setItem("authorize", true);
-			logout();
+			login.logout("authorize");
 			$("#popup").show().find("div").find("p").text("Thank you " + data.firstName + ", for registration!");
 		}
 	};
@@ -122,7 +89,7 @@ $(document).ready(function() {
 			$loginForm.hide().parent().removeClass("active");
 			$loginForm.find('p').remove().end().find('input').removeClass();
 			localStorage.setItem("authorize", data);
-			logout();
+			login.logout("authorize");
 		} else {
 			$loginForm.find("input")
 				.not('input[type="submit"]').addClass("wrong-input");
@@ -131,19 +98,52 @@ $(document).ready(function() {
 		}
 	}
 	
-	function sendAjax(user, url) {
-		$.ajax({
-		    url: url, 
-		    type: 'POST', 
-		    dataType: 'json', 
-		    data: JSON.stringify(user), 
-		    contentType: 'application/json',
-		    mimeType: 'application/json',
-	        success: access
-		});
-	}
-	
 	$("#popup").on('click', 'button', function(){
 		$("#popup").hide();
 	});
 });
+
+function clickOutside(container, handler, extraCondition){
+	container = tojQueryObj(container);
+	if (typeof handler === "boolean"){
+		extraCondition = handler;
+		handler = undefined;
+	}
+	extraCondition = extraCondition || true;
+	
+	$(document).click(function(e){
+		if (!container.is(e.target)	&& container.has(e.target).length === 0 && extraCondition) {
+			if (handler){
+				handler();
+			} else {
+				container.removeClass("active");				
+			}
+			$(this).off(e);
+		}
+	});	
+}
+
+function tojQueryObj(el){
+	return (el instanceof jQuery) ? el : $(el);
+}
+
+function sendAjax(form, url) {
+	$.ajax({
+	    url: url, 
+	    type: 'POST', 
+	    dataType: 'json', 
+	    data: toJSON(form), 
+	    contentType: 'application/json',
+	    mimeType: 'application/json',
+        success: access
+	});
+}
+
+function toJSON(form){
+	var values = $(form).serializeArray(),
+		obj = {};
+	$.each(values, function(k,v){
+		obj[v.name] = v.value;			
+	});
+	return JSON.stringify(obj);
+}

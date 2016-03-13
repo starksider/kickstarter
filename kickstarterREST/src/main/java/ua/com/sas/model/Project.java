@@ -26,6 +26,7 @@ public class Project {
 	
 	private String name;
 	private String description;
+	private String image;
 
 	@Column(name = "money_need")
 	private int moneyNeed;
@@ -128,6 +129,14 @@ public class Project {
 	
 	public void setVideoLink(String videoLink) {
 		this.videoLink = videoLink;
+	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
 	}
 
 }

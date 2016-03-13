@@ -7,6 +7,10 @@ $(document).ready(function() {
 			var category = categories[index];
 			categoriesListener(category);
 		}
+		if (getHash() == "") {
+			var randomIndex = Math.floor(Math.random() * categories.length);
+			loadProjectsOfCategory(categories[randomIndex].id);
+		}
 	});
 	
 	var scipLoad = false;
@@ -21,6 +25,7 @@ $(document).ready(function() {
 	};
 	
 	var loadHash = function(hash){
+		$("#projects").html('');
 		var regexp = /^#categories\/([0-9]+)$/;
 		
 		if(regexp.test(hash)){
@@ -38,43 +43,53 @@ $(document).ready(function() {
 		}
 	};
 	
-	var categoriesListener = function(category) {
+	function categoriesListener(category) {
 		var id = category.id;
 		var cssId = 'category' + id;
 		
 		$("#categories").append('<a id="' + cssId + '" href="#categories/' + id + '">' + category.name + '</a> ');
-		
+
 		$("#" + cssId).click(function(){
 			setHash('#categories/' + id);
+			$("#projects").html('');
 			loadProjectsOfCategory(id);
 		});
 	};
-	
-	var loadProjectsOfCategory = function(id){
+
+	function loadProjectsOfCategory(id){
 		$.get("categories/" + id, function(projects){
-			$("#projects").html('');
 			for (var index in projects) {
 				var project = projects[index];
 				projectListener(project, id);
 			}
 		});
-	};
-	var projectListener = function(project, categoryId) {
+	}
+	function projectListener(project, categoryId) {
 		
 		var id = project.id;
 		var ccsProjectId = 'project' + id;
-		
-		$("#projects").append('<div id="'+ ccsProjectId +'" class="project"><div class="main-info"><h3>' + project.name +
-				'</h3><p>' + project.description +'</p></div></div>');
+		var projectHtml = 
+			'<div id="'+ ccsProjectId +'" class="project">' + 
+				'<div class="main-info">' +
+					'<div class="project-image"></div>' +
+					'<h3>' + project.name +	'</h3>' +
+					'<p>' + project.description +'</p>' + 
+				'</div>' +
+			'</div>';
+		$("#projects").append(projectHtml);
+		$("#" + ccsProjectId).find(".project-image").css('background-image', 'url(resources/css/images/projects/' + project.image + ')');
 		
 		$("#" + ccsProjectId).on('click', '.main-info', function(){
-			var selectProjectClass = $(this).closest(".project");
+			var selectProjectClass = $(this).parent();
 
 			selectProjectClass.toggleClass('highlighted');
 			loadProject(id);
 			if (!selectProjectClass.hasClass('highlighted')){
+				$('.project-image').show();
 				setHash('#categories/' + categoryId);
 			} else {
+				$('.project').not("#project" + id).hide();
+				$('.project-image').hide();
 				setHash('#categories/' + categoryId + '/project/' + id);
 			} 
 		});
@@ -82,20 +97,31 @@ $(document).ready(function() {
 	
 	var loadProject = function(id){
 		if ($("div").hasClass("info-container")){
-			$(".info-container").remove();
+			$(".info-container, .video").remove();
 			$("#project" + id).one('transitionend webkitTransitionEnd oTransitionEnd', function () {
 				$(".project").show();
 			});
 		} else {
 			$.get("project/" + id, function(project){
-				$("#project" + id).append('<div class="info-container"><p>Money we have: ' + project.moneyHas + '</p>'
-						+ '<p>Money wee need: ' + project.moneyNeed
-						+ '</p> <p>Days left: ' + project.daysLeft + '</p></div>');
-				$(".info-container").append('<div class="faq">' +
+				var projectContent = 
+					'<div class="info-container">' +
+						'<p>Money we have: ' + project.moneyHas + '</p>' + 
+						'<p>Money wee need: ' + project.moneyNeed + '</p>' + 
+						'<p>Days left: ' + project.daysLeft + '</p>' +
+					'</div>';
+				var video = 
+						'<div class="video">' +
+							'<iframe width="560" height="315" src="https://www.youtube.com/embed/DJFK43xpEZk" frameborder="0" allowfullscreen></iframe>' +
+						'</div>';
+				$("#project" + id).prepend(video).append(projectContent);
+				var questionHtml = 
+					'<div class="faq">' +
 						'<form method="POST" action="/">' +
-						'<textarea name="question" placeholder="Add your question"></textarea>' +
-						'<input type="submit">' +
-				'</form></div>');
+							'<textarea name="question" placeholder="Add your question"></textarea>' +
+							'<input type="submit" value="Send">' +
+						'</form>'+ 
+					'</div>';
+				$(".info-container").append(questionHtml);
 				getFaqs(id);
 				$('.info-container').on('submit', 'form', function(event){
 					event.preventDefault();
@@ -113,7 +139,7 @@ $(document).ready(function() {
 					}
 				});
 			}).done(function(){
-				$(".project").not("#project"  + id).hide();
+				$(".project").not("#project"  + id).hide().end().find('.project-image').hide();
 				$("#project" + id).addClass("highlighted");
 			});
 		} 
